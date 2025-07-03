@@ -86,3 +86,46 @@ function generatePassword() {
   strengthEl.textContent = label;
   strengthEl.className = cssClass;
 }
+
+// Al final de setupEventListeners()
+document.getElementById("copyBtn").addEventListener("click", copyPassword);
+
+// Nueva función para copiar
+async function copyPassword() {
+  const pwd = document.getElementById("passwordDisplay").textContent;
+  if (!pwd) {
+    alert("Primero genera una contraseña.");
+    return;
+  }
+
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(pwd);
+      alert("Contraseña copiada al portapapeles");
+    } else {
+      fallbackCopyTextToClipboard(pwd);
+    }
+  } catch (err) {
+    console.error("Error al copiar:", err);
+    fallbackCopyTextToClipboard(pwd);
+  }
+}
+
+// Fallback usando execCommand
+function fallbackCopyTextToClipboard(text) {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.top = "-9999px";
+  document.body.appendChild(textarea);
+  textarea.select();
+  try {
+    document.execCommand("copy");
+    alert("Contraseña copiada al portapapeles");
+  } catch (err) {
+    console.error("Fallback error:", err);
+    alert("No se pudo copiar automáticamente, selecciona y copia manualmente.");
+  }
+  document.body.removeChild(textarea);
+}
