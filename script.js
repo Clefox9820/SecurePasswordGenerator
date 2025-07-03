@@ -37,6 +37,22 @@ function insertRandom(str, chars) {
   return str.slice(0, pos) + c + str.slice(pos);
 }
 
+function ensureMinLength(str, min = 12) {
+  const allChars =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+  while (str.length < min) {
+    str = insertRandom(str, allChars);
+  }
+  return str;
+}
+
+function shuffleString(str) {
+  return str
+    .split("")
+    .sort(() => Math.random() - 0.5)
+    .join("");
+}
+
 function generatePassword() {
   const words = getWords();
   if (!words) return;
@@ -44,4 +60,6 @@ function generatePassword() {
   pwd = capitalizeRandom(pwd);
   pwd = insertRandom(pwd, "0123456789");
   pwd = insertRandom(pwd, "!@#$%^&*");
+  pwd = ensureMinLength(pwd);
+  pwd = shuffleString(pwd);
 }
