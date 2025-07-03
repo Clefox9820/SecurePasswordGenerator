@@ -53,6 +53,23 @@ function shuffleString(str) {
     .join("");
 }
 
+function estimateEntropy(str) {
+  const pools = [
+    /[a-z]/.test(str) ? 26 : 0,
+    /[A-Z]/.test(str) ? 26 : 0,
+    /[0-9]/.test(str) ? 10 : 0,
+    /[!@#$%^&*]/.test(str) ? 8 : 0,
+  ];
+  const N = pools.reduce((a, b) => a + b, 0);
+  return str.length * Math.log2(N || 1);
+}
+
+function classifyStrength(entropy) {
+  if (entropy < 60) return ["Débil", "weak"];
+  if (entropy < 80) return ["Moderada", "medium"];
+  return ["Fuerte", "strong"];
+}
+
 function generatePassword() {
   const words = getWords();
   if (!words) return;
@@ -62,4 +79,6 @@ function generatePassword() {
   pwd = insertRandom(pwd, "!@#$%^&*");
   pwd = ensureMinLength(pwd);
   pwd = shuffleString(pwd);
+  const entropy = estimateEntropy(pwd);
+  const [label, cssClass] = classifyStrength(entropy);
 }
