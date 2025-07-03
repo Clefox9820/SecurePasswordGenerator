@@ -81,4 +81,8 @@ function generatePassword() {
   pwd = shuffleString(pwd);
   const entropy = estimateEntropy(pwd);
   const [label, cssClass] = classifyStrength(entropy);
+  document.getElementById("passwordDisplay").textContent = pwd;
+  const strengthEl = document.getElementById("strengthLabel");
+  strengthEl.textContent = label;
+  strengthEl.className = cssClass;
 }
