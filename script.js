@@ -1,11 +1,14 @@
 document.addEventListener("DOMContentLoaded", setupEventListeners);
 
+//Funcion para generar la contraseña
 function setupEventListeners() {
   document
     .getElementById("generateBtn")
     .addEventListener("click", generatePassword);
+  document.getElementById("copyBtn").addEventListener("click", copyPassword);
 }
 
+//Funcion para obtener las palabras ingresadas por usuario
 function getWords() {
   const w1 = document.getElementById("word1").value.trim();
   const w2 = document.getElementById("word2").value.trim();
@@ -16,6 +19,7 @@ function getWords() {
   return [w1, w2];
 }
 
+//Funcion para mezclar las palabras
 function interleaveWords(a, b) {
   let res = "";
   const max = Math.max(a.length, b.length);
@@ -26,17 +30,20 @@ function interleaveWords(a, b) {
   return res;
 }
 
+//Funcion para capitalizar aleatoriamente la contraseña.
 function capitalizeRandom(str) {
   const i = Math.floor(Math.random() * str.length);
   return str.slice(0, i) + str[i].toUpperCase() + str.slice(i + 1);
 }
 
+//Funcion para insertar caracteres aleatorios
 function insertRandom(str, chars) {
   const pos = Math.floor(Math.random() * (str.length + 1));
   const c = chars[Math.floor(Math.random() * chars.length)];
   return str.slice(0, pos) + c + str.slice(pos);
 }
 
+//Funcion para asegurar la longitud de la contraseña
 function ensureMinLength(str, min = 12) {
   const allChars =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
@@ -46,6 +53,7 @@ function ensureMinLength(str, min = 12) {
   return str;
 }
 
+//Funcion para mezclar la contraseña
 function shuffleString(str) {
   return str
     .split("")
@@ -53,6 +61,7 @@ function shuffleString(str) {
     .join("");
 }
 
+//Funcion para estimar la entropia
 function estimateEntropy(str) {
   const pools = [
     /[a-z]/.test(str) ? 26 : 0,
@@ -64,12 +73,14 @@ function estimateEntropy(str) {
   return str.length * Math.log2(N || 1);
 }
 
+//Funcion para clasificar la seguridad
 function classifyStrength(entropy) {
   if (entropy < 60) return ["Débil", "weak"];
   if (entropy < 80) return ["Moderada", "medium"];
   return ["Fuerte", "strong"];
 }
 
+//Funcion para generar la contraseña
 function generatePassword() {
   const words = getWords();
   if (!words) return;
@@ -87,10 +98,7 @@ function generatePassword() {
   strengthEl.className = cssClass;
 }
 
-// Al final de setupEventListeners()
-document.getElementById("copyBtn").addEventListener("click", copyPassword);
-
-// Nueva función para copiar
+// Función para copiar
 async function copyPassword() {
   const pwd = document.getElementById("passwordDisplay").textContent;
   if (!pwd) {
