@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Generador de Contraseñas Seguras</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <main>
-      <h1>Generador de contraseñas seguras </h1>
-      <section id="input-section">
-        <label for="word1">Palabra 1:</label>
-        <input type="text" id="word1" placeholder="Ingresa una palabra" />
-        <label for="word2">Palabra 2:</label>
-        <input type="text" id="word2" placeholder="Ingresa otra palabra" />
-        <button id="generateBtn">Generar contraseña</button>
-        <button id="copyBtn">Copiar contraseña</button>
-      </section>
-      <section id="result-section">
-        <p>Contraseña generada:</p>
-        <div id="passwordDisplay"></div>
-        <p>Nivel de seguridad: <span id="strengthLabel"></span></p>
-      </section>
-    </main>
 
-    <script src="script.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generador de Contraseñas Seguras</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <main>
+    <h1>Generador de contraseñas seguras </h1>
+    <section id="input-section">
+      <label for="phrase">Palabra o frase:</label>
+      <input type="text" id="phrase" placeholder="Ingresa al menos 3 caracteres" />
+      <button id="generateBtn">Generar contraseña</button>
+      <button id="copyBtn">Copiar contraseña</button>
+    </section>
+
+    <section id="result-section">
+      <p>Contraseña generada:</p>
+      <div id="passwordDisplay"></div>
+      <p>Nivel de seguridad: <span id="strengthLabel"></span></p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
 </html>

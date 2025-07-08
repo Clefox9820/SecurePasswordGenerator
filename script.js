@@ -2,22 +2,20 @@ document.addEventListener("DOMContentLoaded", setupEventListeners);
 
 //Funcion para generar la contraseña
 function setupEventListeners() {
-  document
-    .getElementById("generateBtn")
-    .addEventListener("click", generatePassword);
-  document.getElementById("copyBtn").addEventListener("click", copyPassword);
+  document.getElementById('generateBtn').addEventListener('click', generatePassword);
+  document.getElementById('copyBtn').addEventListener('click', copyPassword);
 }
 
 //Funcion para obtener las palabras ingresadas por usuario
-function getWords() {
-  const w1 = document.getElementById("word1").value.trim();
-  const w2 = document.getElementById("word2").value.trim();
-  if (w1.length < 3 || w2.length < 3) {
-    alert("Cada palabra debe tener al menos 3 caracteres.");
+function getPhrase() {
+  const phrase = document.getElementById('phrase').value.trim();
+  if (phrase.length < 3) {
+    alert('Debes ingresar al menos 3 caracteres.');
     return null;
   }
-  return [w1, w2];
+  return phrase;
 }
+
 
 //Funcion para mezclar las palabras
 function interleaveWords(a, b) {
@@ -82,21 +80,24 @@ function classifyStrength(entropy) {
 
 //Funcion para generar la contraseña
 function generatePassword() {
-  const words = getWords();
-  if (!words) return;
-  let pwd = interleaveWords(words[0], words[1]);
-  pwd = capitalizeRandom(pwd);
-  pwd = insertRandom(pwd, "0123456789");
-  pwd = insertRandom(pwd, "!@#$%^&*");
+  const phrase = getPhrase();
+  if (!phrase) return;
+
+  let pwd = capitalizeRandom(phrase);
+  pwd = insertRandom(pwd, '0123456789');
+  pwd = insertRandom(pwd, '!@#$%^&*');
   pwd = ensureMinLength(pwd);
   pwd = shuffleString(pwd);
+
   const entropy = estimateEntropy(pwd);
   const [label, cssClass] = classifyStrength(entropy);
-  document.getElementById("passwordDisplay").textContent = pwd;
-  const strengthEl = document.getElementById("strengthLabel");
+
+  document.getElementById('passwordDisplay').textContent = pwd;
+  const strengthEl = document.getElementById('strengthLabel');
   strengthEl.textContent = label;
   strengthEl.className = cssClass;
 }
+
 
 // Función para copiar
 async function copyPassword() {
